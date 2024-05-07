@@ -1,0 +1,165 @@
+import os
+import random as rand
+
+todosAlumnos = {}
+
+
+class Alumno:
+    def __init__(self, nombre, apellido, edad):
+        self.nombre = nombre
+        self.apellido = apellido
+        self.edad = edad
+
+    def __str__(self):
+        return (
+            f"Nombre: {self.nombre}, Apellido: {self.apellido}, Edad: {self.edad} años"
+        )
+
+
+def generarFolio():
+    while True:
+        folio = rand.randint(0, 9999)
+        if folio not in todosAlumnos:
+            return folio
+
+
+def ingresarAlumnoNuevo():
+    nombre = input("Nombre del alumno: ")
+    apellido = input("Apellido del alumno: ")
+    edad = int(input("Edad del alumno: "))
+    nuevo_alumno = Alumno(nombre, apellido, edad)
+    clave_alumno = generarFolio()  # Usar numero aleatorio como clave
+    todosAlumnos[clave_alumno] = nuevo_alumno  # Añadir al diccionario
+    print("Alumno ingresado correctamente:")
+    print(nuevo_alumno)
+    print("Listado de todos los alumnos: \n")
+    for clave, alumno in todosAlumnos.items():
+        print(f"{clave}: {alumno}")
+
+
+def editarAlumno():
+    while True:
+        print("_____________________________________________")
+        for clave, alumno in todosAlumnos.items():
+            print(f"{clave}: {alumno.nombre} {alumno.apellido}")
+        print("______________________________________________\n")
+        print("Introduce un 0 para salir\n")
+        clave_alumno = int(input("Clave: "))
+        if clave_alumno in todosAlumnos:
+            os.system("cls")
+            print("Alumno Encontrado")
+            print(f"{todosAlumnos[clave_alumno]}\n")
+            menuEditar(clave_alumno)
+        elif clave_alumno == 0:
+            os.system("cls")
+            break
+        else:
+            os.system("cls")
+            print("Alumno no encontrado")
+
+
+def menuEditar(alumno):
+    alumnoEditable = todosAlumnos[alumno]
+    while True:
+        print("________________Editar__________________")
+        print("1. Nombre")
+        print("2. Apellido")
+        print("3. Edad")
+        print("0. Salir")
+        print("_____________________________________________")
+        opcion = int(input("Ingrese una opción: "))
+        if opcion == 1:
+            os.system("cls")
+            print(f"Editar Nombre de {alumnoEditable.nombre} {alumnoEditable.apellido}")
+            todosAlumnos[alumno].nombre = input(
+                f"Reemplazar {alumnoEditable.nombre} con: "
+            )
+            print(f"Nombre actualizado a {todosAlumnos[alumno].nombre}\n")
+            print("_____________________________________________")
+            print(f"Alumno: {todosAlumnos[alumno]}")
+            print("_____________________________________________")
+            pass
+        elif opcion == 2:
+            os.system("cls")
+            print(
+                f"Editar Apellido de {alumnoEditable.nombre} {alumnoEditable.apellido}"
+            )
+            todosAlumnos[alumno].apellido = input(
+                f"Reemplazar {alumnoEditable.apellido} con: "
+            )
+            print(f"Apellido actualizado a {todosAlumnos[alumno].apellido}\n")
+            print("_____________________________________________")
+            print(f"Alumno: {todosAlumnos[alumno]}")
+            print("_____________________________________________")
+            pass
+        elif opcion == 3:
+            os.system("cls")
+            print(f"Editar Edad de {alumnoEditable.nombre} {alumnoEditable.apellido}")
+            todosAlumnos[alumno].edad = int(
+                input(f"Reemplazar {alumnoEditable.edad} con: ")
+            )
+            print(f"Edad actualizada a {todosAlumnos[alumno].edad}\n")
+            print("_____________________________________________")
+            print(f"Alumno: {todosAlumnos[alumno]}")
+            print("_____________________________________________")
+            pass
+        elif opcion == 0:
+            os.system("cls")
+            break
+
+
+def eliminarAlumno():
+    while True:
+        print("______________Alumnos_______________")
+        for clave, alumno in todosAlumnos.items():
+            print(f"{clave}: {alumno}")
+        print("____________________________________")
+        print("Introduce un 0 para salir\n")
+        clave_alumno = int(input("Ingresa la clave de un alumno a eliminar: "))
+
+        if clave_alumno in todosAlumnos:
+            os.system("cls")
+            print("Alumno Encontrado")
+            print(
+                f"Eliminando a : {todosAlumnos[clave_alumno].nombre} {todosAlumnos[clave_alumno].apellido}\n"
+            )
+            todosAlumnos.pop(clave_alumno)
+            os.system("cls")
+            pass
+        elif clave_alumno == 0:
+            os.system("cls")
+            break
+        else:
+            os.system("cls")
+            print("Alumno no encontrado")
+
+
+def mostrarMenu():
+    while True:
+        os.system("cls")
+        print("_____________________________________________")
+        print("1. Ingresar Datos de Alumno Nuevo")
+        print("2. Editar Datos de Alumno")
+        print("3. Eliminar Alumno")
+        print("0. Salir")
+        print("_____________________________________________")
+        opcion = int(input("Ingrese una opción: "))
+        if opcion == 1:
+            os.system("cls")
+            ingresarAlumnoNuevo()
+        elif opcion == 2:
+            os.system("cls")
+            editarAlumno()  # Implementa esta función si es necesaria
+            pass
+        elif opcion == 3:
+            os.system("cls")
+            eliminarAlumno()  # Implementa esta función si es necesaria
+            pass
+        elif opcion == 0:
+            print("Saliendo del programa.")
+            break
+        else:
+            print("Opción no válida, intente de nuevo.")
+
+
+mostrarMenu()  # Llamada a la función que muestra el menú
